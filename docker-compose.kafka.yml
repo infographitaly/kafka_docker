@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  #For Zookeeper part
+  zookeeper:
+    #We use Confluent Platform Docker image
+    image: confluentinc/cp-zookeeper:latest
+    #Env. variables define...
+    environment:
+      #which port Zookeeper will be accessible on...
+      ZOOKEEPER_CLIENT_PORT: 2181
+      #and its basic unit of time
+      ZOOKEEPER_TICK_TIME: 2000
+
+
+  broker:
+    #This is for Kafka broker
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper    
+#    ports:
+#      - 5000:6900/udp
+    environment:
+      KAFKA_BROKER_ID: 1
+      #This to know where to find Zookeeper
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      #This defines where we'll be able to connect to the broker from other applications
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+  gess:
+    build: ./gess_master 
+    ports:
+      - 6900:6900/udp
+#    networks:
+#      default:
+#        ipv4_address: 172.21.0.3
+
+      
+
+# NEW
+networks:
+  default:
+    external:
+      name: kafka-network
+
+      

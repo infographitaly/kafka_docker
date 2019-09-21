@@ -1,0 +1,12 @@
+Using config file /Users/valerioarmuzza/Desktop/Kafka_docker/gess_master/gess.conf, parsing ATM location sources to be used
+Trying to parse ATM location data file /Users/valerioarmuzza/Desktop/Kafka_docker/gess_master/data/west_yorkshire_atms.csv
+gess is now running!
+
+Events are emitted with a delay of 0.75 
+on UDP to localhost on port 6900
+Consume them with a tool such as netcat, e.g.
+	nc -v -u -l 6900
+
+
+timestamp		txn	txn/s
+2019-09-19T10:23:01	15	1
